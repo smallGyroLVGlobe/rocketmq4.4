@@ -143,6 +143,7 @@ public class DefaultMQProducer extends ClientConfig implements MQProducer {
 
     /**
      * Switch flag instance for automatic batch message
+     * 作用 为消息自动批处理
      */
     private boolean autoBatch = false;
     /**
@@ -429,7 +430,9 @@ public class DefaultMQProducer extends ClientConfig implements MQProducer {
     @Override
     public SendResult send(
         Message msg) throws MQClientException, RemotingException, MQBrokerException, InterruptedException {
+        //withNamespace方法作用 为消息的topic添加命名空间
         msg.setTopic(withNamespace(msg.getTopic()));
+        // 如果开启了自动批处理，并且消息不是批处理消息
         if (this.getAutoBatch() && !(msg instanceof MessageBatch)) {
             return sendByAccumulator(msg, null, null);
         } else {

@@ -42,6 +42,10 @@ import org.apache.rocketmq.logging.org.slf4j.Logger;
 import org.apache.rocketmq.logging.org.slf4j.LoggerFactory;
 import org.apache.rocketmq.remoting.exception.RemotingException;
 
+/**
+ * ProduceAccumulator类作用 : 用于累积消息, 以便批量发送
+ *
+ */
 public class ProduceAccumulator {
     // totalHoldSize normal value
     private long totalHoldSize = 32 * 1024 * 1024;

@@ -41,11 +41,13 @@ public class ClientConfig {
     public static final String SEND_LATENCY_ENABLE = "com.rocketmq.sendLatencyEnable";
     public static final String START_DETECTOR_ENABLE = "com.rocketmq.startDetectorEnable";
     public static final String HEART_BEAT_V2 = "com.rocketmq.heartbeat.v2";
+    //namesrvAddr作用 name server 地址
     private String namesrvAddr = NameServerAddressUtils.getNameServerAddresses();
     private String clientIP = NetworkUtil.getLocalAddress();
     private String instanceName = System.getProperty("rocketmq.client.name", "DEFAULT");
     private int clientCallbackExecutorThreads = Runtime.getRuntime().availableProcessors();
     @Deprecated
+    // 作用 namespace 用于区分不同的业务，避免 topic 冲突
     protected String namespace;
     private boolean namespaceInitialized = false;
     protected String namespaceV2;
@@ -378,7 +380,7 @@ public class ClientConfig {
         if (StringUtils.isNotEmpty(namespace)) {
             return namespace;
         }
-
+        //从地址中获取namespace
         if (StringUtils.isNotEmpty(this.namesrvAddr)) {
             if (NameServerAddressUtils.validateInstanceEndpoint(namesrvAddr)) {
                 namespace = NameServerAddressUtils.parseInstanceIdFromEndpoint(namesrvAddr);
